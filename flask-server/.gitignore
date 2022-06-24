@@ -1,0 +1,6 @@
+# environment variables
+.flaskenv
+
+
+# db connection
+config
