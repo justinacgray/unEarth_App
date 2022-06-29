@@ -1,6 +1,8 @@
 # environment variables
-.flaskenv
+.env
 
 
 # db connection
-config
+postgres_connection.py
+
+

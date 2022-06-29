@@ -1,13 +1,6 @@
-from venv import create
-from flask_app.config.postgres_connection #from flask_app => config => postgres_connection
-from datetime import datetime
-from flask import Flask, request
-from flask_sqlalchemy import SQLAlchemy
-from  flask_cors import CORS
-from flask_app import app
-
-app.config['SQLALCHEMY TRACK MODIFICATIONS'] = False
-db=SQLAlchemy(app)
+import datetime
+from sqlalchemy import func
+from ..extensions import db
 # https://www.digitalocean.com/community/tutorials/how-to-use-one-to-many-database-relationships-with-flask-sqlalchemy
 
 class User(db.Model):
@@ -15,12 +8,12 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(255), nullable=False) #can't be empty field, MUST have a value
     last_name = db.Column(db.String(255), nullable=False)
-    email= db.Column(db.String(255), nullable=False)
+    email= db.Column(db.String(255), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.datetime.utcnow)
+    updated_at = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.datetime.utcnow)
     # one to many relationship
-    # saved_searches = 
+    saved_searches = db.relationship('Search') #has to be capital- do not why but it must
     
     
     def __init__(self, first_name, last_name, email, password, created_at, updated_at):
