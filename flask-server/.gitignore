@@ -5,4 +5,7 @@
 # db connection
 postgres_connection.py
 
+db
+versions
+
 
