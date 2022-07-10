@@ -1,9 +1,14 @@
 {
     "cSpell.words": [
+        "checkpw",
         "dotenv",
+        "gensalt",
+        "hashpw",
+        "jsonify",
         "lastrowid",
         "mogrify",
         "psycopg",
+        "pwhash",
         "sqlalchemy"
     ]
 }

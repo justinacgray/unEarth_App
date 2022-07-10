@@ -1,7 +1,5 @@
 from app import app
-from app.controllers import User
-
-
+from app.controllers import user_controller, search_controller
 
 print("inside server file")
 

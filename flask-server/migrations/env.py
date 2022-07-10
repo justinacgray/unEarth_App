@@ -1,5 +1,4 @@
 from __future__ import with_statement
-from app.models import user_model
 
 import logging
 from logging.config import fileConfig
