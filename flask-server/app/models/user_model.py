@@ -36,8 +36,7 @@ class User(db.Model):
         self.email = email
         self.password = password
         self.favorite_country = favorite_country
-        # self.created_at = created_at
-        # self.updated_at = updated_at
+
         
     def __repr__(self):
         # https://stackoverflow.com/questions/1984162/purpose-of-repr-method
@@ -49,43 +48,55 @@ class User(db.Model):
         is_valid = True
         print("data===>" , data)
         
-        # current_user =  User.query.filter_by(email=data['email']).first()
-        # print("current user===>", current_user)
+        # select Id, email, From Person Group BY Id, email  Having Count(*) > 1
+        current_user =  User.query\
+        .filter_by(email = data["email"])\
+        .first()
+        print("current user===>", current_user)
     
-        # #email already in use
-        # Todo - fix this validation
-        # if current_user:
-        #     flash("That email is already in use", category='error')
-        #     is_valid = False
+        if current_user:
+            flash("That email is already in use", category='error')
+            print("This user exists")
+            is_valid = False
         # data needs to be wrapped in parenthesis in order for it to be read
-        if len(data("first_name")) < 2:
+        if len(data["first_name"]) < 2:
             flash( "First Name must be at least 2 characters", category='error')
+            print("first name error")
             is_valid = False
             
         #length of the last name
-        if len(data("last_name")) < 2:
+        if len(data["last_name"]) < 2:
             flash("Last Name ust be at least 2 characters", category='error')
+            print("last name error")
+            
             is_valid = False
             
         
-        if len(data('email')) == 0:
+        if len(data['email']) == 0:
             flash("Email must be entered")
+            print("email not entered error")
+            
             is_valid = False
             
         #email matches format
-        if not EMAIL_REGEX.match(data('email')):    # test whether a field matches the pattern            
+        if not EMAIL_REGEX.match(data['email']):    # test whether a field matches the pattern            
             flash("invalid email address!", category='error')
+            print("email not valid error")
+            
             is_valid = False
             
         #password was entered was less than 8
-        if len(data('password')) < 8:
+        if len(data['password']) < 8:
             flash("Password must be minimum 8 characters", category='error')
+            print("password error")
+            
             is_valid = False
             
-        if (data('password') != data('confirm_password')):
+        if (data['password'] != data['confirm_password']):
             flash("Passwords do not match", category='error')
+            print("passwords do not match error")
             is_valid = False
-        print("completed validations")
+        print("completed register validations")
         return is_valid
 
 
@@ -100,7 +111,7 @@ class User(db.Model):
         if len(data['password']) == 0:
             flash("Password must be entered", category='error')
             is_valid = False
-            
-            
+        print("completed login validations")
+        return is_valid
     
 print("inside user model")
