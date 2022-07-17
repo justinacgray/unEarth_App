@@ -4,6 +4,7 @@ from app import app, db
 from flask import jsonify, render_template, redirect, request, flash
 from app.models.user_model import User
 import jwt
+import json
 from flask_bcrypt import Bcrypt
 
 
@@ -95,56 +96,52 @@ def login():
     return redirect("/dashboard")
 
 
-
-
-
-
-
-
-
-
-
-
-
-@app.route('/logout')
+@app.route('/api/user/logout')
 def logout(request):
-    request.session.flush()
-    return redirect("/")
+    request.session.flush() #todo change this to clear token?
+    return redirect("/") 
 
 
 # get all users
-@app.route("/api/all_users", methods=['GET'])
+@app.route("/api/users", methods=['GET'])
 def get_all_users():
-    all_users = User.query.all()
-    return all_users
+    users = User.query.order_by(User.id.asc()).all()
+    user_list = []
+    for user in users:
+        user_list.append(User.format_user(user))
+    return {"users ": user_list}
+
 # get 1 user
 @app.route('/api/users/<id>/', methods=['GET'])
 def get_one_user(id):
     user = User.query.filter_by(id=id).one()
-    return user
+    formatted_user = User.format_user(user)
+    return {"formatted_user" : formatted_user}
 
 
-@app.route("/api/users/<id>update", methods=['PUT'])
-def update_user(id):
-    pass
-
-@app.route("/api/users/<id>/delete", methods=['DELETE'])
+@app.route("/api/users/delete/<id>", methods=['DELETE'])
 def delete_user(id):
-    pass
+    user = User.query.filter_by(id=id).one()
+    db.session.delete(user)
+    db.session.commit()
+    return f"User (id: {id}) Deleted"
+
+@app.route("/api/users/update/<id>", methods=['PUT'])
+def update_user(id):
+    
+    data = request.form
+    user = User.query.filter_by(id=id)
+    
+    first_name = data.get('first_name')
+    last_name = data.get('last_name')
+    email = data.get('email')
+    favorite_country = data.get('favorite_country')
+    
+    user.update(dict(first_name=first_name, last_name=last_name, email=email, favorite_country=favorite_country, updated_at=datetime.utcnow()))
+    db.session.commit()
+    return {'user' : User.format_user(user.one())}
 
 
-
-# todo - get user in session?
-# @app.route('/dashboard')
-# def dashboard(request):
-#     if 'user_id' not in request.session:
-#         return redirect('/')
-#     one_user = User.objects.filter(id=request.session['user_id'])
-#     context = {
-#         'user': one_user[0]
-#     }
-
-#     return render_template(request, 'success.html', context)
 
 
 

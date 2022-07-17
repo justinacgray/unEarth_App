@@ -114,4 +114,14 @@ class User(db.Model):
         print("completed login validations")
         return is_valid
     
+    @staticmethod
+    def format_user(user):
+        return {
+        "first_name" : user.first_name,
+        "last_name ": user.last_name,
+        "email": user.email,
+        "id" : user.id,
+        "favorite_country" : user.favorite_country
+        }
+    
 print("inside user model")
