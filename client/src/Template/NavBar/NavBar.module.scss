@@ -1,3 +1,67 @@
-.navbar_container {
+.nav_container {
+    height: 10vh;
+    background-color: #aecad1;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .logo {
+        color: #fff;
+        text-decoration: none;
+        font-size: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 10rem;
+        
+    }
+
+    .nav_items {
+        display: flex;
+        list-style: none;
+        text-align: center;
+        // width: 70vw;
+        justify-content: flex-end;
+        margin-right: 2rem;
+    }
+
+    .nav_item {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #fff;
+        font-size: 1.1rem;
+        margin-right: 2rem;
+        padding: 15px;
+    }
+
+    .nav_item:after, .nav_item:before {
+        transition: all .5s;
+    } 
+
+    .nav_item:hover {
+        color: #555;
+        
+    }
+
     
+    .sign_up_btn {
+        border: none;
+        background: transparent;
+        padding: 6px 16px;
+        font-size: 1.1rem;
+        color: #fff;
+        background-color: rgb(209, 197, 181);
+        border-radius: 5px;
+        transition: 0.3s all ease-out;
+        cursor: pointer;
+    }
+
+    .sign_up_btn:hover {
+        color:rgb(7, 126, 56);
+        background: #fff;
+    }
+
+
 }

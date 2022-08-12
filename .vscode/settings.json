@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "checkpw",
+        "craco",
         "dotenv",
         "gensalt",
         "hashpw",
@@ -9,6 +10,8 @@
         "mogrify",
         "psycopg",
         "pwhash",
-        "sqlalchemy"
+        "sqlalchemy",
+        "tailwindcss",
+        "Tillana"
     ]
 }
